@@ -1,0 +1,6 @@
+{
+  "name": "نظرة حرة",
+  "description": "تطبيق ذكي متكامل لذوي الاحتياجات الخاصة للتحكم الكامل بالهاتف بدون أيدي باستخدام تتبع العين والوجه والرأس مع 30 ميزة خارقة.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

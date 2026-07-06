@@ -26,21 +26,18 @@ jobs:
     - name: Grant Execute Permission for Gradle
       run: chmod +x gradlew
 
-    # توليد keystore رسمي للـ Debug لضمان صلاحية الحزمة وتوقيعها
-    - name: Generate Debug Keystore
+    # الحل: توليد ملف الـ Keystore في جذر المشروع مباشرة لتلبية إعداد debugConfig
+    - name: Generate Project Debug Keystore
       run: |
-        mkdir -p ~/.android
-        keytool -genkey -v -keystore ~/.android/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+        keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
 
     - name: Create Dummy Google Services JSON
       run: |
         echo '{"project_info":{"project_number":"123","project_id":"dummy","storage_bucket":"dummy.appspot.com"},"client":[{"client_info":{"mobilesdk_app_id":"1:123:android:123","android_client_info":{"package_name":"com.aistudio.nazrahorra.kbtyxl"}},"api_key":[{"current_key":"dummy_key"}]}]}' > app/google-services.json
 
-    # بناء النسخة النظيفة الكاملة دون حقن أبيات داخلية قد تفسد الـ Manifest
     - name: Build APK
       run: ./gradlew assembleDebug
 
-    # رفع الملف المستخرج من المسار الرسمي الصحيح (outputs وليس intermediates)
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:

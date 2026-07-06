@@ -20,6 +20,10 @@ jobs:
         java-version: '17'
         cache: 'gradle'
 
+    # حل المشكلة: توليد ملف gradlew تلقائياً في البيئة إذا لم يكن موجوداً
+    - name: Generate Gradle Wrapper
+      run: gradle wrapper
+
     - name: Grant Execute Permission for Gradle
       run: chmod +x gradlew
 
@@ -31,4 +35,3 @@ jobs:
       with:
         name: app-arm64-v8a-debug
         path: app/build/outputs/apk/debug/*.apk
-        
